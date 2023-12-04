@@ -22,9 +22,19 @@ class TCPConnection {
     bool _linger_after_streams_finish{true};
     bool _is_active{true};
 
+    size_t _time_since_last_segment_received{0};
+
+    void send_segments(bool fill_window = false);
+
+    void send_rst_segment();
+
+    void abort();
+
   public:
     //! \name "Input" interface for the writer
     //!@{
+
+    void clean_shutdown();
 
     //! \brief Initiate a connection by sending a SYN segment
     void connect();
